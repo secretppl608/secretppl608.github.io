@@ -744,7 +744,8 @@ function updateLogisticsTime() {
     const text = logisticsInfo.value;
     const pattern = /已下单[\s\S]*?(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})[\s\S]*?商品已经下单/m;
     const match = text.match(pattern);
-    p.textContent = match ? match[1] : "未找到下单时间";
+    const realTime = getCurrentDateTime();
+    p.textContent = match ? match[1] : realTime;
     p.className = match ? "highlight" : "";
 }
 
@@ -867,11 +868,29 @@ console.error('复制失败:', err);
   }
  document.body.removeChild(tempTextArea);
 }
+     function getCurrentDateTime() {
+  const now = new Date();
+
+  // 获取日期和时间组件
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0'); // 月份从0开始，需+1
+  const day = String(now.getDate()).padStart(2, '0');
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+
+  // 组合成目标格式
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+     }
+     
 // 初始化所有功能
 function initSystem() {
     // 绑定事件监听
-    dhenter.addEventListener('input', updateOrderNumber);
-    dhenter.addEventListener('input', updateOrderCode);
+    dhenter.addEventListener('input', function(event){
+updateOrderNumber();
+updateOrderCode();
+getCurrentDateTime();
+});
     logisticsInfo.addEventListener('input', updateLogisticsTime);
     yxenter.addEventListener('change', updateGame);
     yxenter.addEventListener('change',function(event){
@@ -909,6 +928,7 @@ function initSystem() {
     updateSku();
     updatePriceAndFee(); // 初始化价格系统
     updateYq();
+  getCurrentDateTime();
 }
 
 // 确保DOM加载完成后初始化
