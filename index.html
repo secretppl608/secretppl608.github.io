@@ -7,6 +7,22 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
      <style>
+  .query-link {
+    font-weight: 700;
+    color: #87ceeb; /* skyblue的十六进制值 */
+    font-size: 2rem;
+    text-decoration: none;
+    transition: color 0.3s;
+    display: inline-block;
+  }
+  .query-link:hover {
+    color: #63b8ff; /* 悬停加深 */
+    text-decoration: underline;
+  }
+       @media (max-width: 768px) {
+  .query-link { font-size: 1.5rem; }
+       }
+
          /* 基础样式重置 */
    .form-control {
             width: 45%;
@@ -508,7 +524,13 @@
  <body>
      <div class="container">
          <header>
-           <a href="https://secretppl608.github.io/find.html" target="_blank" style="font-weight:700;color:skyblue;font-size:2rem">查询系统由此去-&rt;</a>
+           <a href="https://secretppl608.github.io/find.html"
+   target="_blank"
+   rel="noopener noreferrer"
+   class="query-link"
+   aria-label="在新窗口打开查询系统">
+   查询系统由此去→
+           </a>
              <h1>订单信息创建系统</h1>
              <p class="subtitle">惊殊网游数娱</p>
          </header>
