@@ -6,6 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>订单查询系统</title>
     <style>
+        .query-link {
+    font-weight: 700;
+    color: #87ceeb; /* skyblue的十六进制值 */
+    font-size: 2rem;
+    text-decoration: none;
+    transition: color 0.3s;
+    display: inline-block;
+  }
+  .query-link:hover {
+    color: #63b8ff; /* 悬停加深 */
+    text-decoration: underline;
+  }
+       @media (max-width: 768px) {
+  .query-link { font-size: 1.5rem; }
+       }
         * {
             margin: 0;
             padding: 0;
@@ -261,6 +276,13 @@
 <body>
     <div class="container">
         <div class="header">
+            <a href="https://secretppl608.github.io/"
+   target="_blank"
+   rel="noopener noreferrer"
+   class="query-link"
+   aria-label="在新窗口打开创建系统">
+   创建系统由此去→
+            </a>
             <h1>订单查询系统</h1>
             <p>输入编号或订单号查询订单详细信息</p>
         </div>
