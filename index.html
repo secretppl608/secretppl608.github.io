@@ -889,9 +889,21 @@ function initSystem() {
     dhenter.addEventListener('input', function(event){
 updateOrderNumber();
 updateOrderCode();
-getCurrentDateTime();
 });
     logisticsInfo.addEventListener('input', updateLogisticsTime);
+  // 使用事件委托统一处理所有表单元素的 input 和 change 事件
+document.addEventListener('input', handleFormEvent);
+document.addEventListener('change', handleFormEvent);
+
+let debounceTimer;
+function handleFormEvent(event) {
+  if (!event.target.matches('input, select, textarea')) return;
+  
+  // 500ms防抖
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(updateLogisticsTime, 500);
+     }
+  
     yxenter.addEventListener('change', updateGame);
     yxenter.addEventListener('change',function(event){
       updateOrderCode();
