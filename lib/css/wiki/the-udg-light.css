@@ -7,7 +7,16 @@
  * 圈名 失忆（或者也可以叫我杳昭）
  */
 :root {
-  --banner-title: "天轨之城";
-  --banner-subtitle: "轨道汇合，灵魂融化";
+  --banner-title: "匍匐前进";
+  --banner-subtitle: "就如同阴沟里的老鼠那样";
+}
+
+div#page-title {
+  display: none;
+}
+
+div#container {
+  background-color: dimgrey;
+  color: white;
 }
 
