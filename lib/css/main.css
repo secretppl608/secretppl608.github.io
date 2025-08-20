@@ -1,0 +1,203 @@
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4efe9 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            animation: fadeIn 1s ease-out;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .welcome-text {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 25px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .domain {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 1rem;
+            margin: 15px 0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .domain:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        .profile {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            animation: slideUp 1s ease-out;
+        }
+        
+        .profile h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 500;
+            border-left: 4px solid #3498db;
+            padding-left: 12px;
+        }
+        
+        .profile-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .profile-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .status {
+            display: inline-block;
+            background: #e8f4fc;
+            color: #3498db;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin: 10px 0;
+            font-weight: 500;
+        }
+        
+        .modules {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .module-card {
+            background: white;
+            flex: 1;
+            min-width: 250px;
+            max-width: 380px;
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .module-card:nth-child(1):hover {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        }
+        
+        .module-card:nth-child(2):hover {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+        }
+        
+        .module-card:nth-child(3):hover {
+            background: linear-gradient(135deg, #fbe9e7 0%, #ffccbc 100%);
+        }
+        
+        .module-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .module-card h3 {
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+        
+        .module-card p {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .welcome-text {
+                font-size: 1rem;
+            }
+            
+            .modules {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .module-card {
+                width: 100%;
+            }
+        }
