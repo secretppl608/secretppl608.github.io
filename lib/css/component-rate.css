@@ -1,0 +1,44 @@
+
+    @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css");
+.container {
+    display: flex;
+    align-items: stretch;
+    
+    background-color: aliceblue;
+    width: 155px;
+    border-bottom: 2px solid gray;
+}
+.container button,.container > span,.container > a{
+    border: none;
+    border-radius:0;
+    
+}
+.container > span {
+    padding-left:2px;
+    padding-top:5px;
+}
+.container button{
+    font-size: 1.5rem;
+    background-color:transparent;
+}
+.container button:hover,.container button:active{
+    animation: clickin 0.25s linear 0s 1 normal forwards;
+}
+
+@keyframes clickin{
+    from{
+        background-color:aliceblue;
+    }
+    20%{
+        background-color: linear-gradient(to bottom, aliceblue,skyblue 20%);
+    }
+    50%{
+        background-color: linear-gradient(to bottom, aliceblue,skyblue 50%);
+    }
+    80%{
+        background-color: linear-gradient(to bottom, aliceblue,skyblue 80%);
+    }
+    to{
+        background-color:skyblue;
+    }
+}
