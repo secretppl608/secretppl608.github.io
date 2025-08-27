@@ -1,4 +1,5 @@
 <style>
+    @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css");
 .container {
     display: flex;
     align-items: stretch;
@@ -7,12 +8,12 @@
     width: 140px;
     border-bottom: 2px solid gray;
 }
-.container button,.container > span{
+.container button,.container > span,.container > a{
     border: none;
     border-radius:0;
     
 }
-.container span {
+.container > span {
     padding-left:2px;
     padding-top:5px;
 }
@@ -44,20 +45,21 @@
 </style>
 <div class="container">
 <span>评分：<span>0</span>      </span>
-<button>+</button>
-<button>-</button>
-<button>×</button>
+<button id="btnl">+</button>
+<button id="btnd">-</button>
+<button id="btnc">×</button>
+    <a href="https://solivagant.site/component/rate/code"><span id="link"><i class="bi bi-info-circle-fill"></i></span></a>
 </div>
 <script src="https://solivagant.site/lib/script/jquery-3.7.1.min.js"></script>
 <script>
 let url = new URL(document.location).searchParams;
-let o-group = 1;
-let o-type = "rate";
-let o-compid = url.get("compid");
+let oriGroup = 1;
+let oriType = "rate";
+let oriCompid = url.get("compid");
 let str = {
-  type: o-type;
-  group: o-goup;
-  compid: o-compid;
+  type: oriType;
+  group: oriGroup;
+  compid: oriCompid;
   }
 let jsonstr = JSON.stringify(str,null,4);
 console.log(jsonstr);
