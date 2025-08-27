@@ -1,0 +1,66 @@
+<style>
+.container {
+    display: flex;
+    align-items: stretch;
+    
+    background-color: aliceblue;
+    width: 140px;
+    border-bottom: 2px solid gray;
+}
+.container button,.container > span{
+    border: none;
+    border-radius:0;
+    
+}
+.container span {
+    padding-left:2px;
+    padding-top:5px;
+}
+.container button{
+    font-size: 1.5rem;
+    background-color:transparent;
+}
+.container button:hover,.container button:active{
+    animation: clickin 0.5s linear 0s 1 normal forwards;
+}
+
+@keyframes clickin{
+    from{
+        background-color:acliceblue;
+    }
+    20%{
+        background-color: linear-gradient(to bottom, aliceblue,skyblue 20%);
+    }
+    50%{
+        background-color: linear-gradient(to bottom, aliceblue,skyblue 50%);
+    }
+    80%{
+        background-color: linear-gradient(to bottom, aliceblue,skyblue 80%);
+    }
+    to{
+        background-color:skyblue;
+    }
+}
+</style>
+<div class="container">
+<span>评分：<span>0</span>      </span>
+<button>+</button>
+<button>-</button>
+<button>×</button>
+</div>
+<script src="https://solivagant.site/lib/script/jquery-3.7.1.min.js"></script>
+<script>
+let url = new URL(document.location).searchParams;
+let o-group = 1;
+let o-type = "rate";
+let o-compid = url.get("compid");
+let str = {
+  type: o-type;
+  group: o-goup;
+  compid: o-compid;
+  }
+let jsonstr = JSON.stringify(str,null,4);
+console.log(jsonstr);
+
+</script>
+
