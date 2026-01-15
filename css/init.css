@@ -1,0 +1,117 @@
+.click {
+    background-image: url(https://cdn.pixabay.com/photo/2017/01/05/09/02/candy-1954340_1280.png);
+    background-size: 100%;
+    border: none;
+    background-position: 0px 0.2px;
+    width: 100px;
+    height: 35px;
+}
+
+.click:hover {
+    animation: 1s ease-in 0s 1 route;
+}
+
+@keyframes route {
+    from {
+        transform: rotate(0deg) scale(1.5);
+    }
+
+    to {
+        transform: rotate(720deg) scale(1.5);
+    }
+}
+
+.hide {
+    display: none !important;
+}
+
+#start-animation {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+
+    & img {
+        width: 600px;
+        height: 300px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+
+        /* 初始位置：在屏幕外 */
+        &.up {
+            top: -300px;
+            /* 完全在屏幕上方 */
+        }
+
+        &.down {
+            top: 100vh;
+            /* 完全在屏幕下方 */
+        }
+    }
+}
+
+body {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+/* 闭合动画 - 移动到中间 */
+.to-center-up {
+    animation: center-up 1s ease-out forwards;
+}
+
+.to-center-down {
+    animation: center-down 1s ease-out forwards;
+}
+
+/* 分离动画 - 从中间分开 */
+.separate-up {
+    animation: separate-up 1s ease-in forwards;
+}
+
+.separate-down {
+    animation: separate-down 1s ease-in forwards;
+}
+
+@keyframes center-up {
+    to {
+        top: calc(50vh - 300px);
+        /* 中间位置，图片高度300px */
+    }
+}
+
+@keyframes center-down {
+    to {
+        top: 50vh;
+    }
+}
+
+@keyframes separate-up {
+    from {
+        top: calc(50vh - 300px);
+    }
+
+    to {
+        top: -300px;
+        /* 回到初始位置上方 */
+    }
+}
+
+@keyframes separate-down {
+    from {
+        top: 50vh;
+    }
+
+    to {
+        top: 100vh;
+        /* 回到初始位置下方 */
+    }
+}
+
+#choose {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
