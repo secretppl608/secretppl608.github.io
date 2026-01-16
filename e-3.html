@@ -5,20 +5,55 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <style>
-            body {
+            #c {
                 display: flex;
                 flex-direction: column;
                 gap: 5px;
                 justify-content: center;
                 align-items: center;
             }
+            canvas {
+                width: 80%;
+                display: flex;
+                justify-content: center;
+            }
+            header {
+                display: flex;
+                justify-content: space-around;
+                align-items:center;
+                width: 100%;
+                background-color: blanchedalmond;
+                height: 50px;
+            }
+            .h {
+                display: inline-block;
+                height: 30px;
+                font-size: larger;
+            }
+
+            .n {
+                border: 2px solid black;
+                padding: 5px;
+                background-color: azure;
+            }
         </style>
     </head>
     <body>
         <div id="c">
+            <header>
+                <span id="number" class="h n">
+                    
+                </span>
+                <span id="emoji" class="h">
+                    😌
+                </span>
+                <span id="time" class="h n">
+                    000
+                </span>
+            </header>
             <canvas id="canvas" width="550" height="550">
                 抱歉，你的浏览器不支持 canvas 元素
-                （这些内容将会在不支持&lt;canvas%gt;元素的浏览器或是禁用了
+                （这些内容将会在不支持&lt;canvas&gt;元素的浏览器或是禁用了
                 JavaScript 的浏览器内渲染并展现）
             </canvas>
         </div>
