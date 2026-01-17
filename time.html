@@ -160,7 +160,7 @@
                     case 'fj':
                         hint= '此成员的封禁期将于以下倒计时结束后结束\n'
                 }
-                const toh = `[[iframe https://secretppl608.github.io/time.html?m=${cs}&t=${new Date(data.get('ct')).getTime()} style="width:400px;display:block;height:60px;"]]`;
+                const toh = `[[iframe https://secretppl608.github.io/time.html?m=${cs}&t=${new Date(data.get('dt')).getTime()} style="width:400px;display:block;height:60px;"]]`;
                 code.innerText = hint+toh;
                 document.body.appendChild(code);
             }
