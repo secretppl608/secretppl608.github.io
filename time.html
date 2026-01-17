@@ -194,7 +194,7 @@
                             break;
                     }
                 }
-                const toh = `[[iframe https://secretppl608.github.io/time.html?m=${cs}&t=${data.get("point")}&g=${time} style="width:400px;display:block;height:120px;"]]`;
+                const toh = `[[iframe ${location.href}?m=${cs}&t=${data.get("point")}&g=${time} style="width:400px;display:block;height:120px;"]]`;
                 code.innerText = hint + toh;
                 document.body.appendChild(code);
             }
@@ -243,7 +243,12 @@
             document.querySelector("#control").style.display = "none";
         }
         const r = shref.get("t");
-        let tt =  new Date(shref.get('g')).getTime();
+        let tt = 0;
+        if(shref.get('m')=='fj'){
+            tt =  Number(shref.get('g'))-8*60*60*1000;
+        } else {
+            tt =  Number(shref.get('g'));
+        }
         let tn = Date.now();
         let th = tt - tn;
         if (th < 0) {
