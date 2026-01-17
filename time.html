@@ -75,15 +75,16 @@
             margin-top: 30px;
 
             &::before {
-                content: '如果您是neo-t分站的职员，请将以下内容复制到评论区';
+                content: "如果您是neo-t分站的职员，请将以下内容复制到评论区";
                 display: block;
                 position: relative;
                 bottom: 30px;
             }
         }
 
-        #tips.will{
+        #tips.will {
             color: green;
+
             &.has {
                 color: red;
             }
@@ -116,8 +117,13 @@
                 <label for="f3">-30</label><input type="radio" id="f3" value="f3" name="point" />
             </fieldset>
             <fieldset>
-                <legend>选择日期</legend>
-                <input type="datetime-local" name="dt" id="dt" />
+                <legend>选择日期（只有封禁计时才需要）</legend>
+                <input type="number" name="y" id="y" />年
+                <input type="number" name="mt" id="m" />月
+                <input type="number" name="d" id="d" />日
+                <input type="number" name="h" id="h" />时
+                <input type="number" name="mn" id="m" />分
+                <input type="number" name="s" id="s" />秒
             </fieldset>
             <button type="submit" id="cts">生成</button>
         </form>
@@ -147,29 +153,57 @@
             );
             function codex() {
                 code = document.createElement("code");
-                const data = new FormData(document.querySelector('#ct'));
-                const cs = data.get('mode');
-                let hint = '';
+                const data = new FormData(document.querySelector("#ct"));
+                const cs = data.get("mode");
+                let hint = "";
                 switch (cs) {
-                    case 'cd':
-                        hint = `由于条目已触达${data.get('point')=='f1'?-2:data.get('point')=='f2'?-10:-30}分的删除线，根据[[[/deletions-policy|删除政策]]]，据此宣告将${data.get('point')=='f1'?'于72小时后':data.get('point')=='f2'?'于24小时后':'立即'}删除此条目\n`;
+                    case "cd":
+                        hint = `由于条目已触达${data.get("point") == "f1" ? -2 : data.get("point") == "f2" ? -10 : -30}分的删除线，根据[[[/deletions-policy|删除政策]]]，据此宣告将${data.get("point") == "f1" ? "于72小时后" : data.get("point") == "f2" ? "于24小时后" : "立即"}删除此条目\n`;
                         break;
-                    case 'ld':
+                    case "ld":
                         hint = `由于条目已发布1个月，且分数并未达到合格线以上，根据[[[/deletions-policy|删除政策]]]，据此宣告将于72小时后删除此条目\n`;
                         break;
-                    case 'fj':
-                        hint= '此成员的封禁期将于以下倒计时结束后结束\n'
+                    case "fj":
+                        hint = "此成员的封禁期将于以下倒计时结束后结束\n";
                 }
-                const toh = `[[iframe https://secretppl608.github.io/time.html?m=${cs}&t=${new Date(data.get('dt')).getTime()} style="width:400px;display:block;height:120px;"]]`;
-                code.innerText = hint+toh;
+                let time = 0;
+                if (data.get('mode') == 'fj') {
+                    time = Date.UTC(
+                        data.get('y'),
+                        data.get("mt") - 1,
+                        data.get("d"),
+                        data.get("h"),
+                        data.get("mn"),
+                        data.get("s")
+                    );
+                } else if(data.get('mode') == 'ld') {
+                    time = Date.now()+72*60*60*1000;
+                }else {
+                    switch (data.get("point")){
+                        case "f1":
+                            time = Date.now()+72*60*60*1000;
+                            break;
+                        case 'f2':
+                            time = Date.now()+24*60*60*1000;
+                            break;
+                        case 'f3':
+                            time = Date.now()+0;
+                            break;
+                        default:
+                            time = Date.now()+72*60*60*1000;
+                            break;
+                    }
+                }
+                const toh = `[[iframe https://secretppl608.github.io/time.html?m=${cs}&t=${data.get("point")}&g=${time} style="width:400px;display:block;height:120px;"]]`;
+                code.innerText = hint + toh;
                 document.body.appendChild(code);
             }
             function make(e) {
                 if (code == null) {
-                    codex()
+                    codex();
                 } else {
                     code.remove();
-                    codex()
+                    codex();
                 }
             }
         </script>
@@ -208,13 +242,15 @@
         } else {
             document.querySelector("#control").style.display = "none";
         }
-        const tt = Number(shref.get("t"));
+        const r = shref.get("t");
+        let tt =  new Date(shref.get('g')).getTime();
         let tn = Date.now();
         let th = tt - tn;
-        if(th<0){
-            document.querySelector('#tips').classList.add('has');
-            document.querySelector('#tips').innerText = '以下倒计时已于如下时间前结束：';
-            th=tn-tt;
+        if (th < 0) {
+            document.querySelector("#tips").classList.add("has");
+            document.querySelector("#tips").innerText =
+                "以下倒计时已于如下时间前结束：";
+            th = tn - tt;
         }
         for (let i = t.length - 1; i >= 0; i--) {
             t[i].innerText =
@@ -226,7 +262,8 @@
                         60 *
                         60 -
                         (Math.floor(th / 1000 / 60 / 60) -
-                            Math.floor(th / 1000 / 60 / 60 / 24) * 24) *
+                            Math.floor(th / 1000 / 60 / 60 / 24) *
+                            24) *
                         60 *
                         60 -
                         (Math.floor(th / 1000 / 60) -
@@ -237,24 +274,27 @@
                                 Math.floor(th / 1000 / 60 / 60 / 24) *
                                 24) *
                             60) *
-                        60
+                        60,
                     )
                         .toString()
                         .padStart(2, 0)
                     : i == 2
                         ? Math.abs(
                             Math.floor(th / 1000 / 60) -
-                            Math.floor(th / 1000 / 60 / 60 / 24) * 24 * 60 -
+                            Math.floor(th / 1000 / 60 / 60 / 24) *
+                            24 *
+                            60 -
                             (Math.floor(th / 1000 / 60 / 60) -
-                                Math.floor(th / 1000 / 60 / 60 / 24) * 24) *
-                            60
+                                Math.floor(th / 1000 / 60 / 60 / 24) *
+                                24) *
+                            60,
                         )
                             .toString()
                             .padStart(2, 0)
                         : i == 1
                             ? Math.abs(
                                 Math.floor(th / 1000 / 60 / 60) -
-                                Math.floor(th / 1000 / 60 / 60 / 24) * 24
+                                Math.floor(th / 1000 / 60 / 60 / 24) * 24,
                             )
                                 .toString()
                                 .padStart(2, 0)
@@ -265,10 +305,11 @@
         const to = setInterval(() => {
             let tn = Date.now();
             let th = tt - tn;
-            if(th<0){
-                document.querySelector('#tips').classList.add('has');
-                document.querySelector('#tips').innerText = '以下倒计时已于如下时间前结束：';
-                th = tn-tt;
+            if (th < 0) {
+                document.querySelector("#tips").classList.add("has");
+                document.querySelector("#tips").innerText =
+                    "以下倒计时已于如下时间前结束：";
+                th = tn - tt;
             }
             for (let i = t.length - 1; i >= 0; i--) {
                 t[i].innerText =
@@ -289,10 +330,12 @@
                                 24 *
                                 60 -
                                 (Math.floor(th / 1000 / 60 / 60) -
-                                    Math.floor(th / 1000 / 60 / 60 / 24) *
+                                    Math.floor(
+                                        th / 1000 / 60 / 60 / 24,
+                                    ) *
                                     24) *
                                 60) *
-                            60
+                            60,
                         )
                             .toString()
                             .padStart(2, 0)
@@ -303,16 +346,19 @@
                                 24 *
                                 60 -
                                 (Math.floor(th / 1000 / 60 / 60) -
-                                    Math.floor(th / 1000 / 60 / 60 / 24) *
+                                    Math.floor(
+                                        th / 1000 / 60 / 60 / 24,
+                                    ) *
                                     24) *
-                                60
+                                60,
                             )
                                 .toString()
                                 .padStart(2, 0)
                             : i == 1
                                 ? Math.abs(
                                     Math.floor(th / 1000 / 60 / 60) -
-                                    Math.floor(th / 1000 / 60 / 60 / 24) * 24
+                                    Math.floor(th / 1000 / 60 / 60 / 24) *
+                                    24,
                                 )
                                     .toString()
                                     .padStart(2, 0)
