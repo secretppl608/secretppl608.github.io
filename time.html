@@ -170,6 +170,12 @@
                     case "fj":
                         hint = "此成员的封禁期将于以下倒计时结束后结束\n";
                 }
+                let hintEnd = "";
+                if(cs == 'cd' || cs == 'ld'){
+                    hintEnd = '此帖为职员帖，不应在此帖下回复，除非您并非原作者但希望重写，则可以在此帖下回复希望重写条目的意图，如果您是原作者并认为自己的心血不应被删除，可以联系职员评估是否应当得到豁免。'
+                } else {
+                    hintEnd = '此帖为职员帖，不应在此帖下回复。'
+                }
                 let time = 0;
                 if (data.get('mode') == 'fj') {
                     time = Date.UTC(
@@ -198,8 +204,8 @@
                             break;
                     }
                 }
-                const toh = `[[iframe ${location.href}?m=${cs}&t=${data.get("point")}&g=${time} style="width:400px;display:block;height:120px;"]]`;
-                code.innerText = hint + toh;
+                const toh = `[[iframe ${location.href}?m=${cs}&t=${data.get("point")}&g=${time} style="width:400px;display:block;height:120px;"]]\n`;
+                code.innerText = hint + toh + hintEnd;
                 document.body.appendChild(code);
             }
             function make(e) {
