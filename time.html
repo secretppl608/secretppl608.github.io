@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>计时器页面</title>
+    <style>
+        @font-face {
+            font-family: "num";
+            src: url("./assets/unispace-bd-3.ttf");
+        }
+
+        #time-box {
+            font-family: "num";
+            font-size: 20px;
+            display: flex;
+            gap: 30px;
+
+            & div.t {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 5px;
+                position: relative;
+                background-color: black;
+                color: white;
+                box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+                padding: 10px;
+                width: 100%;
+                height: 100%;
+            }
+
+            & .c {
+                position: relative;
+                width: 30px;
+                height: 50px;
+                display: flex;
+                flex-direction: column;
+
+                &:not(:first-of-type)::before {
+                    content: ":";
+                    position: absolute;
+                    top: 30%;
+                    left: -10px;
+                }
+
+                & .w {
+                    position: absolute;
+                    top: 50%;
+                    width: calc(100% + 15px);
+                    background-color: black;
+                    height: 2px;
+                }
+            }
+        }
+
+        .u {
+            position: absolute;
+            bottom: 2px;
+            left: 60%;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        code {
+            background-color: gainsboro;
+            border: 1px dashed black;
+            padding: 10px;
+            display: inline-block;
+            width: 90vw;
+            top: 10px;
+            margin-top: 30px;
+            margin-bottom: 70px;
+            overflow-wrap: anywhere;
+            position: relative;
+
+            &::before {
+                content: "如果您是neo-t分站的职员，请将以下内容复制到评论区";
+                display: block;
+                position: absolute;
+                top:-20px;
+                font-size: smaller;
+                color: brown;
+            }
+        }
+
+        #tips.will {
+            color: green;
+
+            &.has {
+                color: red;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="control">
+        <h1>
+            <a href="https://backrooms-neo-t-wiki.wikidot.com">The Backrooms Neo-t</a>
+            分部倒计时工具
+        </h1>
+        <h2>
+            作者：olysad,本站点技术<a href="https://backrooms-neo-t-wiki.wikidot.com/meet-the-staff">职员</a>
+        </h2>
+        <form id="ct">
+            <fieldset>
+                <legend>模式选择</legend>
+                <label for="cd">一般删除</label><input type="radio" id="cd" value="cd" name="mode" />
+                ——
+                <label for="ld">长期低分</label><input type="radio" id="ld" value="ld" name="mode" />
+                ——
+                <label for="fj">封禁计时</label><input type="radio" id="fj" value="fj" name="mode" />
+            </fieldset>
+            <fieldset>
+                <legend>条目分数</legend>
+                <label for="f1">-2</label><input type="radio" id="f1" value="f1" name="point" />
+                <label for="f2">-10</label><input type="radio" id="f2" value="f2" name="point" />
+                <label for="f3">-30</label><input type="radio" id="f3" value="f3" name="point" />
+            </fieldset>
+            <fieldset>
+                <legend>选择日期（只有封禁计时才需要）</legend>
+                <input type="number" name="y" id="y" />年
+                <input type="number" name="mt" id="m" />月
+                <input type="number" name="d" id="d" />日
+                <input type="number" name="h" id="h" />时
+                <input type="number" name="mn" id="m" />分
+                <input type="number" name="s" id="s" />秒
+            </fieldset>
+            <button type="submit" id="cts">生成</button>
+        </form>
+        <script>
+            let code = null;
+            document.getElementById("ct").addEventListener(
+                "submit",
+                (e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    make(e);
+                },
+                {
+                    capture: false,
+                },
+            );
+            document.getElementById("cts").addEventListener(
+                "click",
+                (e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    make(e);
+                },
+                {
+                    capture: false,
+                },
+            );
+            function codex() {
+                code = document.createElement("code");
+                const data = new FormData(document.querySelector("#ct"));
+                const cs = data.get("mode");
+                let hint = "";
+                switch (cs) {
+                    case "cd":
+                        hint = `由于条目已触达${data.get("point") == "f1" ? -2 : data.get("point") == "f2" ? -10 : -30}分的删除线，根据[[[/deletions-policy|删除政策]]]，据此宣告将${data.get("point") == "f1" ? "于72小时后" : data.get("point") == "f2" ? "于24小时后" : "立即"}删除此条目\n`;
+                        break;
+                    case "ld":
+                        hint = `由于条目已发布1个月，且分数并未达到合格线以上，根据[[[/deletions-policy|删除政策]]]，据此宣告将于72小时后删除此条目\n`;
+                        break;
+                    case "fj":
+                        hint = "此成员的封禁期将于以下倒计时结束后结束\n";
+                }
+                let hintEnd = "";
+                if(cs == 'cd' || cs == 'ld'){
+                    hintEnd = '此帖为职员帖，不应在此帖下回复，除非您并非原作者但希望重写，则可以在此帖下回复希望重写条目的意图，如果您是原作者并认为自己的心血不应被删除，可以联系职员评估是否应当得到豁免。'
+                } else {
+                    hintEnd = '此帖为职员帖，不应在此帖下回复。'
+                }
+                let time = 0;
+                if (data.get('mode') == 'fj') {
+                    time = Date.UTC(
+                        data.get('y'),
+                        data.get("mt") - 1,
+                        data.get("d"),
+                        data.get("h"),
+                        data.get("mn"),
+                        data.get("s")
+                    );
+                } else if(data.get('mode') == 'ld') {
+                    time = Date.now()+72*60*60*1000;
+                }else {
+                    switch (data.get("point")){
+                        case "f1":
+                            time = Date.now()+72*60*60*1000;
+                            break;
+                        case 'f2':
+                            time = Date.now()+24*60*60*1000;
+                            break;
+                        case 'f3':
+                            time = Date.now()+0;
+                            break;
+                        default:
+                            time = Date.now()+72*60*60*1000;
+                            break;
+                    }
+                }
+                const toh = `[[iframe ${location.href}?m=${cs}&t=${data.get("point")}&g=${time} style="width:400px;display:block;height:120px;"]]\n`;
+                code.innerText = hint + toh + hintEnd;
+                document.body.appendChild(code);
+            }
+            function make(e) {
+                if (code == null) {
+                    codex();
+                } else {
+                    code.remove();
+                    codex();
+                }
+            }
+        </script>
+    </div>
+    <div id="time">
+        <div id="tips" class="will">以下倒计时将于如下时间后结束：</div>
+        <div id="time-box">
+            <div id="d" class="c">
+                <div id="day" class="t">00</div>
+                <span class="u">天</span>
+                <div class="w"></div>
+            </div>
+            <div id="h" class="c">
+                <div id="hours" class="t">00</div>
+                <span class="u">时</span>
+                <div class="w"></div>
+            </div>
+            <div id="m" class="c">
+                <div id="minute" class="t">00</div>
+                <span class="u">分</span>
+                <div class="w"></div>
+            </div>
+            <div id="s" class="c">
+                <div id="second" class="t">00</div>
+                <span class="u">秒</span>
+                <div class="w"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const t = document.querySelectorAll(".t");
+        const shref = new URLSearchParams(location.search);
+        const isT = shref.has("t") && shref.has("m");
+        if (!isT) {
+            document.querySelector("#time").style.display = "none";
+        } else {
+            document.querySelector("#control").style.display = "none";
+        }
+        const r = shref.get("t");
+        let tt = 0;
+        if(shref.get('m')=='fj'){
+            tt =  Number(shref.get('g'))-8*60*60*1000;
+        } else {
+            tt =  Number(shref.get('g'));
+        }
+        let tn = Date.now();
+        let th = tt - tn;
+        if (th < 0) {
+            document.querySelector("#tips").classList.add("has");
+            document.querySelector("#tips").innerText =
+                "以下倒计时已于如下时间前结束：";
+            th = tn - tt;
+        }
+        // console.log(th);
+        for (let i = t.length - 1; i >= 0; i--) {
+            t[i].innerText =
+                i == 3
+                    ? Math.abs(
+                        Math.floor(th / 1000) -
+                        Math.floor(th / 1000 / 60 / 60 / 24) *
+                        24 *
+                        60 *
+                        60 -
+                        (Math.floor(th / 1000 / 60 / 60) -
+                            Math.floor(th / 1000 / 60 / 60 / 24) *
+                            24) *
+                        60 *
+                        60 -
+                        (Math.floor(th / 1000 / 60) -
+                            Math.floor(th / 1000 / 60 / 60 / 24) *
+                            24 *
+                            60 -
+                            (Math.floor(th / 1000 / 60 / 60) -
+                                Math.floor(th / 1000 / 60 / 60 / 24) *
+                                24) *
+                            60) *
+                        60,
+                    )
+                        .toString()
+                        .padStart(2, 0)
+                    : i == 2
+                        ? Math.abs(
+                            Math.floor(th / 1000 / 60) -
+                            Math.floor(th / 1000 / 60 / 60 / 24) *
+                            24 *
+                            60 -
+                            (Math.floor(th / 1000 / 60 / 60) -
+                                Math.floor(th / 1000 / 60 / 60 / 24) *
+                                24) *
+                            60,
+                        )
+                            .toString()
+                            .padStart(2, 0)
+                        : i == 1
+                            ? Math.abs(
+                                Math.floor(th / 1000 / 60 / 60) -
+                                Math.floor(th / 1000 / 60 / 60 / 24) * 24,
+                            )
+                                .toString()
+                                .padStart(2, 0)
+                            : Math.abs(Math.floor(th / 1000 / 60 / 60 / 24))
+                                .toString()
+                                .padStart(2, 0);
+        }
+        const to = setInterval(() => {
+            let tn = Date.now();
+            let th = tt - tn;
+            if (th < 0) {
+                document.querySelector("#tips").classList.add("has");
+                document.querySelector("#tips").innerText =
+                    "以下倒计时已于如下时间前结束：";
+                th = tn - tt;
+            }
+            // console.log(th)
+            for (let i = t.length - 1; i >= 0; i--) {
+                t[i].innerText =
+                    i == 3
+                        ? Math.abs(
+                            Math.floor(th / 1000) -
+                            Math.floor(th / 1000 / 60 / 60 / 24) *
+                            24 *
+                            60 *
+                            60 -
+                            (Math.floor(th / 1000 / 60 / 60) -
+                                Math.floor(th / 1000 / 60 / 60 / 24) *
+                                24) *
+                            60 *
+                            60 -
+                            (Math.floor(th / 1000 / 60) -
+                                Math.floor(th / 1000 / 60 / 60 / 24) *
+                                24 *
+                                60 -
+                                (Math.floor(th / 1000 / 60 / 60) -
+                                    Math.floor(
+                                        th / 1000 / 60 / 60 / 24,
+                                    ) *
+                                    24) *
+                                60) *
+                            60,
+                        )
+                            .toString()
+                            .padStart(2, 0)
+                        : i == 2
+                            ? Math.abs(
+                                Math.floor(th / 1000 / 60) -
+                                Math.floor(th / 1000 / 60 / 60 / 24) *
+                                24 *
+                                60 -
+                                (Math.floor(th / 1000 / 60 / 60) -
+                                    Math.floor(
+                                        th / 1000 / 60 / 60 / 24,
+                                    ) *
+                                    24) *
+                                60,
+                            )
+                                .toString()
+                                .padStart(2, 0)
+                            : i == 1
+                                ? Math.abs(
+                                    Math.floor(th / 1000 / 60 / 60) -
+                                    Math.floor(th / 1000 / 60 / 60 / 24) *
+                                    24,
+                                )
+                                    .toString()
+                                    .padStart(2, 0)
+                                : Math.abs(Math.floor(th / 1000 / 60 / 60 / 24))
+                                    .toString()
+                                    .padStart(2, 0);
+            }
+        }, 1000);
+    </script>
+</body>
+
+</html>
