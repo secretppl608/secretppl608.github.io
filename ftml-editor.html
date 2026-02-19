@@ -3,10 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>下载页</title>
+    <title>FTML-EDITOR - 极致简单的编辑器</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', '楷体', cursive; /* 程序员最爱的字体 */
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(45deg, #f3f3f3, #e0e0e0);
+            text-align: center;
+        }
+        .download-btn {
+            display: inline-block;
+            padding: 20px 40px;
+            font-size: 30px;
+            background: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            box-shadow: 0 9px #999;
+            transition: all 0.1s;
+            font-weight: bold;
+            border: 2px solid #45a049;
+        }
+        .download-btn:hover {
+            background: #45a049;
+            transform: translateY(4px);
+            box-shadow: 0 5px #666;
+        }
+        .warning {
+            color: red;
+            font-size: 12px;
+            margin-top: 20px;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
 </head>
 <body>
-    FTML-EDITOR 编辑器：
-    <a href="/build/ftml-editor.exe" download="ftml-editor.exe">点击下载EXE文件</a>
+    <h1>🚀 FTML-EDITOR 编辑器</h1>
+    <p>下一代维基语法可视化文本编辑器</p>
+    
+    <a href="/build/ftml-editor.exe" download="ftml-editor.exe" class="download-btn">
+        ⬇️ 点击下载 EXE 文件
+    </a>
+    
+    <p class="warning">⚠️ 警告：下载后如果不好用，请在主页联系我</p>
+    
+    <div style="margin-top: 50px; color: #666;">
+        <p>版本: v1.0.0 | 更新日期: 今天 | 支持系统: Windows XP 及以上</p>
+        <p>更新日志: 
+            <br>- 修复了一些已知BUG
+        </p>
+    </div>
 </body>
 </html>
