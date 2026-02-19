@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>拾昔客栈</title>
+        <!-- 使用Inter字体，干净现代 -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        />
+        <style>
+            /* RESET & 基础变量 */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: "Inter", sans-serif;
+                background-color: #fafbfc;
+                color: #1e293b;
+                line-height: 1.5;
+                scroll-behavior: smooth;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 2rem;
+            }
+
+            /* 导航 */
+            .navbar {
+                padding: 1.5rem 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                border-bottom: 1px solid #e9edf2;
+            }
+
+            .logo a {
+                font-weight: 700;
+                font-size: 1.8rem;
+                letter-spacing: -0.02em;
+                text-decoration: none;
+                background: linear-gradient(135deg, #2563eb, #7c3aed);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+            .nav-links {
+                display: flex;
+                gap: 2.5rem;
+            }
+
+            .nav-links a {
+                text-decoration: none;
+                font-weight: 500;
+                color: #475569;
+                transition: color 0.2s;
+                font-size: 1rem;
+            }
+
+            .nav-links a:hover {
+                color: #2563eb;
+            }
+
+            /* 按钮风格 */
+            .btn {
+                display: inline-block;
+                background-color: #1e293b;
+                color: white;
+                font-weight: 600;
+                padding: 0.75rem 1.8rem;
+                border-radius: 40px;
+                text-decoration: none;
+                transition:
+                    background-color 0.2s,
+                    transform 0.1s;
+                border: none;
+                cursor: pointer;
+                font-size: 0.95rem;
+            }
+
+            .btn:hover {
+                background-color: #2563eb;
+                transform: translateY(-2px);
+                box-shadow: 0 10px 20px -8px rgba(37, 99, 235, 0.3);
+            }
+
+            .btn-outline {
+                background-color: transparent;
+                color: #1e293b;
+                border: 1.5px solid #cbd5e1;
+                box-shadow: none;
+            }
+
+            .btn-outline:hover {
+                background-color: #f1f5f9;
+                border-color: #2563eb;
+                color: #2563eb;
+                transform: translateY(-2px);
+                box-shadow: none;
+            }
+
+            /* HERO 区域 */
+            .hero {
+                padding: 5rem 0 4rem 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .hero-badge {
+                background: #e0f2fe;
+                color: #0369a1;
+                font-weight: 600;
+                font-size: 0.85rem;
+                padding: 0.3rem 1rem;
+                border-radius: 30px;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.4rem;
+                margin-bottom: 1.5rem;
+                border: 1px solid #bae6fd;
+            }
+
+            .hero h1 {
+                font-size: 3.2rem;
+                font-weight: 700;
+                letter-spacing: -0.03em;
+                line-height: 1.2;
+                max-width: 800px;
+                margin-bottom: 1.2rem;
+                background: linear-gradient(to right, #0f172a, #2563eb);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+            .hero .highlight {
+                background: linear-gradient(145deg, #fbbf24, #f59e0b);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+                color: #475569;
+                max-width: 650px;
+                margin-bottom: 2.2rem;
+            }
+
+            .hero-cta {
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            /* 技术栈墙 ———— 展示您熟悉的领域 */
+            .tech-stack {
+                background-color: white;
+                padding: 4rem 0;
+                border-radius: 3rem 3rem 0 0;
+                box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.02);
+            }
+
+            .section-header {
+                text-align: center;
+                margin-bottom: 3rem;
+            }
+
+            .section-header h2 {
+                font-size: 2.2rem;
+                font-weight: 700;
+                color: #0f172a;
+                letter-spacing: -0.02em;
+            }
+
+            .section-header p {
+                color: #64748b;
+                margin-top: 0.5rem;
+                font-size: 1.1rem;
+            }
+
+            .tech-grid {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1.2rem 1.8rem;
+                max-width: 900px;
+                margin: 0 auto;
+            }
+
+            .tech-item {
+                background: #f8fafc;
+                padding: 0.6rem 1.6rem;
+                border-radius: 40px;
+                font-weight: 600;
+                color: #1e293b;
+                border: 1px solid #e2e8f0;
+                transition: all 0.15s;
+                font-size: 1rem;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+            }
+
+            .tech-item i {
+                margin-right: 8px;
+                color: #2563eb;
+                font-size: 1rem;
+            }
+
+            .tech-item:hover {
+                border-color: #2563eb;
+                background: #eff6ff;
+                transform: scale(1.02);
+                box-shadow: 0 8px 15px -6px #93c5fd;
+            }
+
+            /* 项目展示 ———— 样板区域，您可自行替换 */
+            .projects {
+                padding: 5rem 0;
+                background-color: #fafbfc;
+            }
+
+            .project-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+                margin-top: 2rem;
+            }
+
+            .project-card {
+                background: white;
+                border-radius: 24px;
+                padding: 1.8rem;
+                box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.05);
+                border: 1px solid #f0f2f5;
+                transition: all 0.25s;
+            }
+
+            .project-card:hover {
+                transform: translateY(-6px);
+                border-color: #b1d0ff;
+                box-shadow: 0 25px 35px -12px #b1c9f0;
+            }
+
+            .project-icon {
+                font-size: 2.2rem;
+                margin-bottom: 1.2rem;
+                color: #2563eb;
+            }
+
+            .project-card h3 {
+                font-size: 1.5rem;
+                font-weight: 700;
+                margin-bottom: 0.7rem;
+            }
+
+            .project-tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                margin: 1rem 0 1.2rem 0;
+            }
+
+            .tag {
+                background: #eef2ff;
+                color: #1e3a8a;
+                font-size: 0.75rem;
+                font-weight: 600;
+                padding: 0.3rem 0.9rem;
+                border-radius: 30px;
+                letter-spacing: 0.01em;
+            }
+
+            .project-card p {
+                color: #475569;
+                margin-bottom: 1.5rem;
+            }
+
+            .card-link {
+                text-decoration: none;
+                font-weight: 600;
+                color: #2563eb;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.3rem;
+            }
+
+            .card-link i {
+                font-size: 0.8rem;
+                transition: transform 0.2s;
+            }
+
+            .card-link:hover i {
+                transform: translateX(4px);
+            }
+
+            /* 关于/联系混合区 ———— 简洁卡片 */
+            .contact-section {
+                background: white;
+                padding: 4rem 0;
+                border-top: 1px solid #eef2f6;
+                border-bottom: 1px solid #eef2f6;
+            }
+
+            .contact-flex {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 3rem;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .contact-left {
+                flex: 2;
+                min-width: 280px;
+            }
+
+            .contact-left h3 {
+                font-size: 2rem;
+                font-weight: 700;
+                letter-spacing: -0.02em;
+                margin-bottom: 1rem;
+            }
+
+            .contact-left p {
+                color: #475569;
+                font-size: 1.1rem;
+                max-width: 450px;
+            }
+
+            .contact-right {
+                flex: 1;
+                min-width: 240px;
+                display: flex;
+                flex-direction: column;
+                gap: 1.2rem;
+            }
+
+            .contact-item {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                background: #f8fafc;
+                padding: 1rem 1.5rem;
+                border-radius: 60px;
+                border: 1px solid #e2e8f0;
+                transition: background 0.2s;
+                text-decoration: none;
+                color: #1e293b;
+                font-weight: 500;
+            }
+
+            .contact-item i {
+                font-size: 1.3rem;
+                width: 28px;
+                color: #2563eb;
+            }
+
+            .contact-item:hover {
+                background: #eef2ff;
+                border-color: #2563eb;
+            }
+
+            /* footer 样板，留作更改 */
+            .footer {
+                padding: 2.5rem 0;
+                text-align: center;
+                color: #64748b;
+                background: #fafbfc;
+                font-size: 0.95rem;
+            }
+
+            .footer a {
+                color: #334155;
+                text-decoration: none;
+                border-bottom: 1px dotted #94a3b8;
+            }
+
+            .footer a:hover {
+                color: #2563eb;
+                border-bottom-color: #2563eb;
+            }
+
+            /* 一些小工具 */
+            .note-sample {
+                background: #f1f4f9;
+                border-radius: 16px;
+                padding: 0.8rem 1.5rem;
+                margin: 2rem 0 0;
+                font-size: 0.95rem;
+                color: #334155;
+                border-left: 5px solid #2563eb;
+                display: inline-block;
+            }
+
+            /* 响应式 */
+            @media (max-width: 700px) {
+                .navbar {
+                    flex-direction: column;
+                    gap: 1rem;
+                }
+                .nav-links {
+                    gap: 1.5rem;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                }
+                .hero h1 {
+                    font-size: 2.5rem;
+                }
+                .contact-flex {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+                .contact-right {
+                    width: 100%;
+                }
+            }
+
+            body{
+                padding: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 导航栏 —— 样板占位，您可以轻松改Logo/链接 -->
+        <nav class="navbar container">
+            <div class="logo">
+                <a href="/"
+                    >拾昔<span
+                        style="
+                            background: none;
+                            -webkit-text-fill-color: #2563eb;
+                        "
+                        >客栈</span
+                    ></a
+                >
+            </div>
+            <div class="nav-links">
+                <a href="#work">项目</a>
+                <a href="#stack">技术栈</a>
+                <a href="#contact">联系</a>
+                <a href="#">博客</a>
+                <a href="#">实验室</a>
+            </div>
+        </nav>
+
+        <main>
+            <p
+                        style="
+                            text-align: center;
+                            margin-top: 2.5rem;
+                            color: #6f7c91;
+                        "
+                    >
+                        <a style="text-decoration: none;box-shadow:1px 1px 3px gray;padding: 10px;border-radius:10px;color:gray;" href="/ftml-editor"><i class="fas fa-wrench"></i>ftml-editor编辑器见此处</a>
+                    </p>
+            <section class="hero container">
+                <span class="hero-badge"
+                    ><i class="fas fa-code"></i> 独立开发者 / 全栈工匠</span
+                >
+                <h1>
+                    构建数字产品 <br />
+                    不止于 <span class="highlight">代码</span>
+                </h1>
+                <p>
+                    嗨，我是 拾昔 · 拥有<br>
+                    HTML/CSS/JS/TS/Python/Java/Node.js/Next.js/React <br>
+                    等丰富项目经验，将想法转化为优雅、高性能的应用程序。
+                </p>
+                <div class="hero-cta">
+                    <a href="#work" class="btn"
+                        ><i
+                            class="fas fa-arrow-down"
+                            style="margin-right: 8px"
+                        ></i
+                        >查看作品</a
+                    >
+                    <a href="#contact" class="btn btn-outline"
+                        ><i class="fas fa-comment"></i> 联系我</a
+                    >
+                </div>
+                <div class="note-sample">
+                    <i
+                        class="fas fa-pencil-alt"
+                        style="margin-right: 0.5rem"
+                    ></i>
+                    如果您需要专业软件开发、小程序制造、网站开发等服务，可以点击上方按钮联系
+                </div>
+            </section>
+            <section id="stack" class="tech-stack">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>技术 & 工具</h2>
+                        <p>日常构建所使用的主力语言与框架</p>
+                    </div>
+                    <div class="tech-grid">
+                        <!-- 您列出的每一项: HTML, CSS, JS, TS, Python, Java, Node.js, Next.js, React 等等 -->
+                        <span class="tech-item"
+                            ><i class="fab fa-html5"></i> HTML5</span
+                        >
+                        <span class="tech-item"
+                            ><i class="fab fa-css3-alt"></i> CSS3</span
+                        >
+                        <span class="tech-item"
+                            ><i class="fab fa-js"></i> JavaScript (ES6+)</span
+                        >
+                        <span class="tech-item"
+                            ><i class="fas fa-code"></i> TypeScript</span
+                        >
+                        <span class="tech-item"
+                            ><i class="fab fa-python"></i> Python</span
+                        >
+                        <span class="tech-item"
+                            ><i class="fab fa-java"></i> Java</span
+                        >
+                        <span class="tech-item"
+                            ><i class="fab fa-node"></i> Node.js</span
+                        >
+                        <span class="tech-item"
+                            ><i class="fas fa-cubes"></i> Next.js</span
+                        >
+                        <span class="tech-item"
+                            ><i class="fab fa-react"></i> React</span
+                        >
+                        <span class="tech-item"
+                            ><i class="fas fa-database"></i> MongoDB</span
+                        >
+                        <span class="tech-item"
+                            ><i class="fas fa-cloud"></i> Docker</span
+                        >
+                        <span class="tech-item"
+                            ><i class="fas fa-code-branch"></i> Git</span
+                        >
+                    </div>
+                </div>
+            </section>
+
+            <section id="work" class="projects container">
+                <div class="section-header">
+                    <h2>精选项目</h2>
+                    <p>一些近期的沙盒与产品 · 点击卡片可查看详情</p>
+                </div>
+                <div class="project-grid">
+                    <!-- 卡片 1 -->
+                    <div class="project-card">
+                        <div class="project-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3>维基作品管理机器人</h3>
+                        <div class="project-tags">
+                            <span class="tag">TS</span>
+                            <span class="tag">Node.js</span>
+                        </div>
+                        <p>
+                            一个维基自动管理机器人，根据评分等多因素自动判断文章处于何种状态并作出响应。
+                        </p>
+                        <a href="https://github.com/secretppl608/neot-bot" class="card-link"
+                            >查看项目 <i class="fas fa-arrow-right"></i
+                        ></a>
+                    </div>
+                    <!-- 卡片 2 -->
+                    
+                <!-- 额外的项目占位提示，您可以继续增删卡片或替换为真实链接 -->
+                <div style="text-align: center; margin-top: 2.8rem">
+                    <a
+                        href="https://github.com/secretppl608"
+                        class="btn btn-outline"
+                        style="border-radius: 40px"
+                        ><i class="fab fa-github"></i> 查看更多 on GitHub</a
+                    >
+                </div>
+            </section>
+
+            <!-- 联系区域 样板 -->
+            <section id="contact" class="contact-section">
+                <div class="container contact-flex">
+                    <div class="contact-left">
+                        <h3>保持联络 · 开放合作</h3>
+                        <p>
+                            无论您有 freelance
+                            项目、技术讨论，或者只是想打声招呼，我都会尽快回复。
+                        </p>
+                        <!-- 显式写出邮箱/社交只是占位，您可替换 -->
+                        <div
+                            style="
+                                margin-top: 1.8rem;
+                                font-size: 1rem;
+                                color: #2d3c53;
+                            "
+                        >
+                            <i
+                                class="fas fa-map-pin"
+                                style="margin-right: 0.6rem; color: #2563eb"
+                            ></i>
+                            远程 · 基于 UTC+8 时间
+                        </div>
+                    </div>
+                    <div class="contact-right">
+                        <a
+                            href="mailto:hello@yourdomain.dev"
+                            class="contact-item"
+                        >
+                            <i class="fas fa-envelope"></i> 2455426046@qq.com
+                        </a>
+                        <a href="#" class="contact-item">
+                            <i class="fab fa-github"></i> github.com/secretppl608
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 注脚 简短的声明和更新占位 -->
+            <footer class="footer">
+                <div class="container">
+                    <p>
+                        © 2026 拾昔 — 独立开发者
+                    </p>
+                    <p style="margin-top: 0.8rem">
+                        <i class="fas fa-code"></i> 使用
+                        <a href="#">HTML/CSS/JS</a> 搭建 · 部分图标来自
+                        <a href="#">FontAwesome</a>
+                    </p>
+                    
+                </div>
+            </footer>
+        </main>
+
+        <!-- 极少量的交互样板 (例如平滑滚动, 占位控制台提醒) 完全可移除 -->
+        <script>
+            (function () {
+                // 仅添加一点平滑滚动 (可选)
+                document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+                    anchor.addEventListener("click", function (e) {
+                        const href = this.getAttribute("href");
+                        if (href === "#" || href === "") return;
+                        const target = document.querySelector(href);
+                        if (target) {
+                            e.preventDefault();
+                            target.scrollIntoView({
+                                behavior: "smooth",
+                                block: "start",
+                            });
+                        }
+                    });
+                });
+
+                // 简单的控制台友好提醒
+                console.log(
+                    "👋 嗨，独立开发者！这是您的个人主页样板。所有内容均可自定义，祝您构建愉快！",
+                );
+            })();
+        </script>
+    </body>
+</html>
