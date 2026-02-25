@@ -27,8 +27,9 @@
                 body:JSON.stringify(
                     jsonObj
                 ),
-            }).then((data)=>{
-                document.writeln(data);
+            }).then(async (data)=>{
+                const d = await data.json()
+                document.writeln(d);
             }).catch((error)=>{
                 document.writeln(error);
             })
