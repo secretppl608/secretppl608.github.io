@@ -24,9 +24,9 @@
                 headers:{
                     "Content-Type": "application/json"
                 },
-                body:JSON.stringify({
+                body:JSON.stringify(
                     jsonObj
-                }),
+                ),
             }).then((data)=>{
                 document.writeln(data);
             }).catch((error)=>{
